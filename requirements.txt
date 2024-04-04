@@ -1,3 +1,2 @@
 bleak==0.21.1
-bleak-winrt==1.2.0
 async-timeout==4.0.3
