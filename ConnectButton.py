@@ -1,9 +1,11 @@
 from bleak import BleakScanner, BleakClient
 
+
 class BLEDeviceReader:
-    def __init__(self, on_data_received, scan_duration=5, use_bdaddr=False):
+    def __init__(self, device_name, on_data_received, scan_duration=5, use_bdaddr=False):
         self.service_uuid = "000000ff-0000-1000-8000-00805f9b34fb"
         self.characteristic_uuid = "0000ff01-0000-1000-8000-00805f9b34fb"
+        self.device_name = device_name
         self.on_data_received = on_data_received
         self.scan_duration = scan_duration
         self.use_bdaddr = use_bdaddr
@@ -14,11 +16,12 @@ class BLEDeviceReader:
         devices = await BleakScanner.discover(duration=self.scan_duration)
 
         for device in devices:
-            if self.service_uuid in device.metadata.get("uuids", []):
-                print(f"Found target device: {device}")
-                self.client = BleakClient(device.address)
-                await self.connect_and_start_listening()
-                return
+            if device.name == self.device_name:
+                if self.service_uuid in device.metadata.get("uuids", []):
+                    print(f"Found target device: {device}")
+                    self.client = BleakClient(device.address)
+                    await self.connect_and_start_listening()
+                    return
 
         print("No target device found.")
 
@@ -43,4 +46,3 @@ class BLEDeviceReader:
     def on_data_received_default(self, data):
         # Default data received handler if none is provided
         print(f"Data received: {data}")
-

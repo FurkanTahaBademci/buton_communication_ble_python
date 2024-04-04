@@ -9,16 +9,21 @@ from ConnectButton import BLEDeviceReader
 # Alınan veriyi işleyen bir fonksiyon tanımlanır.
 # Bu fonksiyon, BLE cihazından okunan ham veriyi (bytearray formatında) alır,
 # ve ilgilenilen ilk byte'ı çıkararak ekrana yazdırır.
+
+
 def handle_data_received(data):
     # Gelen veriyi bytearray'a çevirip ilk byte'ı alır
     value = bytearray(data)[0]
     # Alınan değeri ekrana yazdırır
     print(f"Received Data: {value}")
 
+
 # BLEDeviceReader sınıfının bir örneğini oluşturur ve veri alındığında çağrılacak fonksiyon olarak
 # handle_data_received fonksiyonunu kullanır. Bu, BLE cihazından veri okunduğunda
 # handle_data_received fonksiyonunun otomatik olarak çağrılmasını sağlar.
-reader = BLEDeviceReader(handle_data_received)
+# Ayrıca, cihaz adını eldiven üzerindeki etiketle eşleşecek şekilde ayarlayın.
+reader = BLEDeviceReader(
+    on_data_received=handle_data_received, device_name="BUTON_1")
 
 # Asenkron bir şekilde reader nesnesinin scan_and_connect metodunu çalıştırır.
 # Bu metod, öncelikle çevredeki BLE cihazlarını tarar, ardından belirli bir cihaza bağlanır

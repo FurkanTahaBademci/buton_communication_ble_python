@@ -33,8 +33,8 @@ def handle_data_received(data):
     print(f"Received Data: {value}")
 ```
 
-
 # Projelere Entregrasyon
+
 ```
 # asyncio kütüphanesi, Python'da asenkron programlama için kullanılır.
 # Bu kütüphane, özellikle ağ işlemleri ve zaman uyumsuz görevler gibi bloke edici işlemler için kullanışlıdır.
@@ -45,4 +45,14 @@ import asyncio
 # Bu sınıf, belirli bir BLE cihazına bağlanmak, servisler ve karakteristikler üzerinden veri okumak için gerekli işlevselliği sağlar.
 
 from ConnectButton import BLEDeviceReader
+```
+
+```
+# BLEDeviceReader sınıfının bir örneğini oluşturur ve veri alındığında çağrılacak fonksiyon olarak
+# handle_data_received fonksiyonunu kullanır. Bu, BLE cihazından veri okunduğunda
+# handle_data_received fonksiyonunun otomatik olarak çağrılmasını sağlar.
+# Ayrıca, cihaz adını eldiven üzerindeki etiketle eşleşecek şekilde ayarlayın.
+
+reader = BLEDeviceReader(
+    on_data_received=handle_data_received, device_name="BUTON_1")
 ```
